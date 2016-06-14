@@ -36,19 +36,13 @@ var bio = {
       HTMLbioPic.replace('%data%', bio.biopic);
     $('#header').append(formattedBioPic);
 
-    if (bio.skills.length > 0) {
-      $('#header').append(HTMLskillsStart);
-      var formattedSkill = HTMLskills.replace('%data%', bio.skills[0]);
-      $('#skills').append(formattedSkill);
-      formattedSkill = HTMLskills.replace('%data%', bio.skills[1]);
-      $('#skills').append(formattedSkill);
-      formattedSkill = HTMLskills.replace('%data%', bio.skills[2]);
+    $('#header').append(HTMLskillsStart);
+    for (var x in bio.skills) {
+      var formattedSkill = HTMLskills.replace('%data%', bio.skills[x]);
       $('#skills').append(formattedSkill);
     }
-    $('#footerContacts').append(formattedMobile);
-    $('#footerContacts').append(formattedEmail);
-    $('#footerContacts').append(formattedGithub);
-    $('#footerContacts').append(formattedLocation);
+
+    $('#footerContacts').append(formattedMobile, formattedEmail, formattedGithub, formattedLocation);
   }
 };
 
@@ -99,19 +93,19 @@ work.display();
 var projects = {
   projects: [
   {title: '10 Year Project Car',
-    date: '2015',
+    dates: '2015',
     description: 'First car I ever test drove was an old VW GTI. I vowed I would have one. This is my 2015 beauty...',
-    image: ['images/sin-city-ride.jpg'],
+    images: ['images/sin-city-ride.jpg'],
   },
   {title: 'Building a Studio',
-    date: '2013',
+    dates: '2013',
     description: 'Startup under the President. Launched online learning program and had the unbelievable opportunity to create my own studio from scratch.',
-    image: ['images/loaded.jpg'],
+    images: ['images/loaded.jpg'],
   },
   {title: 'Psychology Studies',
-    date: '2013',
+    dates: '2013',
     description: 'Cuz I\'\ve been to paradise, but I\'\ve never been to me...',
-    image: ['images/psychology.jpg'],
+    images: ['images/psychology.jpg'],
   }
   ],
   display: function() {
@@ -120,15 +114,15 @@ var projects = {
       var formattedTitle = HTMLprojectTitle.replace('%data%', projects.projects[project].title);
       $('.project-entry:last').append(formattedTitle);
 
-      var formattedDates = HTMLprojectDates.replace('%data%', projects.projects[project].date);
+      var formattedDates = HTMLprojectDates.replace('%data%', projects.projects[project].dates);
       $('.project-entry:last').append(formattedDates);
 
       var formattedDescription = HTMLprojectDescription.replace('%data%', projects.projects[project].description);
       $('.project-entry:last').append(formattedDescription);
 
-      if (projects.projects[project].image.length > 0) {
-        for (var image in projects.projects[project].image) {
-          var formattedImage = HTMLprojectImage.replace('%data%', projects.projects[project].image[image]);
+      if (projects.projects[project].images.length > 0) {
+        for (var image in projects.projects[project].images) {
+          var formattedImage = HTMLprojectImage.replace('%data%', projects.projects[project].images[image]);
           $('.project-entry:last').append(formattedImage);
         }
       }
@@ -142,14 +136,18 @@ var education = {
     {name: 'Washington University',
       location: 'St. Louis, MO',
       degree: 'BA',
-      majors: 'Psychology',
+      majors: [
+        'Psychology'
+      ],
       dates: '1998-2001',
       url: 'www.wustl.edu',
     },
     {name: 'Northwestern University',
       location: 'Evanston, IL',
       degree: 'Credit',
-      majors: 'Filmmaking Coursework',
+      majors: [
+        'Filmmaking Coursework'
+      ],
       dates: '2006-2010',
       url: 'www.northwestern.edu',
     }
@@ -157,12 +155,12 @@ var education = {
   onlineCourses: [
     {title: 'JavaScript Essentials',
       school: 'Lynda',
-      date: 2016,
+      date: '2016',
       url: 'www.lynda.com'
     },
     {title: 'JavaScript Basics',
       school: 'Udacity',
-      date: 2016,
+      date: '2016',
       url: 'www.udacity.com'
     }
   ],
@@ -178,9 +176,14 @@ var education = {
       var formattedEdDates = HTMLschoolDates.replace('%data%', education.schools[school].dates);
       $('.education-entry:last').append(formattedEdDates);
 
-      var formattedEdMajor = HTMLschoolMajor.replace('%data%', education.schools[school].majors);
-      $('.education-entry:last').append(formattedEdMajor);
+      if (education.schools[school].majors.length > 0) {
+        for (var majors in education.schools[school].majors) {
+          var formattedEdMajor = HTMLschoolMajor.replace('%data%', education.schools[school].majors[majors]);
+          $('.education-entry:last').append(formattedEdMajor);
+        }
+      }
     }
+
     $('#education').append(HTMLonlineClasses);
     for (var online in education.onlineCourses) {
       $('#education').append(HTMLschoolStart);
